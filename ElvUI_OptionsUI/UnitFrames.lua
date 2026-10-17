@@ -9254,3 +9254,8 @@ function E:RefreshCustomTextsConfigs()
 	end
 end
 E:RefreshCustomTextsConfigs()
+
+-- Independent resource controls also work when AceConfig fails to render.
+E.Options.args.unitframe.args.player.args.coaResources = {
+ order=6,type="execute",name="CoA Resources",func=function() UF:Show_CoAResourcesPanel() end
+}

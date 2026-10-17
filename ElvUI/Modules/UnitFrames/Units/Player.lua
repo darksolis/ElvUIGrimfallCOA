@@ -66,6 +66,18 @@ function UF:Construct_PlayerFrame(frame)
 end
 
 function UF:Update_PlayerFrame(frame, db)
+	-- Work on a shallow view: preserve the user's legacy bar settings in the profile.
+	local coaConfig = UF:Get_CoAResourceConfig()
+	if coaConfig.enable then
+		local view = {}
+		for k, v in pairs(db) do view[k] = v end
+		for _, key in ipairs({"power", "mana", "rage", "energy", "runic"}) do
+			view[key] = {}
+			for k, v in pairs(db[key] or {}) do view[key][k] = v end
+			view[key].enable = false
+		end
+		db = view
+	end
 	frame.db = db
 
 	do
@@ -197,6 +209,7 @@ function UF:Update_PlayerFrame(frame, db)
 
 	E:SetMoverSnapOffset(frame:GetName().."Mover", -(12 + db.castbar.height))
 	frame:UpdateAllElements("ForceUpdate")
+	UF:Configure_CoAResources(frame)
 end
 
 tinsert(UF.unitstoload, "player")

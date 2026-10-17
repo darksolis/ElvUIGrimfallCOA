@@ -4699,3 +4699,9 @@ E.LayoutMoverPositions = {
 		ShiftAB = "TOPLEFT,ElvUIParent,BOTTOMLEFT,4,273"
 	}
 }
+-- CoA resource settings are profile-local; no custom class-token assumptions.
+P.unitframe.units.player.coaResources = {
+ enable = true, height = 14, gap = 2, offset = 3, text = true,
+ mana = "AUTO", rage = "AUTO", focus = "AUTO", energy = "AUTO",
+ happiness = "HIDE", runic = "AUTO"
+}

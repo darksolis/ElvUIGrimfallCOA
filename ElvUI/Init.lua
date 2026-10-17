@@ -430,3 +430,23 @@ function AddOn:ToggleOptionsUI(msg)
 
 	GameTooltip:Hide() --Just in case you're mouseovered something and it closes.
 end
+-- A rendering error must not leave AceGUI's partially opened window trapping input.
+local UnsafeToggleOptionsUI = AddOn.ToggleOptionsUI
+function AddOn:ToggleOptionsUI(msg)
+ local ok, problem = pcall(UnsafeToggleOptionsUI, self, msg)
+ if ok then return end
+ self.CoAOptionsError = tostring(problem)
+ local dialog = self.Libs.AceConfigDialog
+ local open = dialog and dialog.OpenFrames and dialog.OpenFrames[AddOnName]
+ local frame = open and open.frame
+ if frame then
+  pcall(frame.Hide, frame)
+ end
+ if dialog then
+  pcall(dialog.Close, dialog, AddOnName)
+  if dialog.OpenFrames then dialog.OpenFrames[AddOnName] = nil end
+ end
+ self.GUIFrame = nil
+ self:Print("Settings failed to open: "..tostring(problem))
+ self:Print("Use /coapower for resource controls. Use /coapower error to copy this error.")
+end

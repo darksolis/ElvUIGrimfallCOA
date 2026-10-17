@@ -26,6 +26,7 @@
 	</Button>
 
 	<Script file="UnitFrames.lua"/>
+	<Script file="CoAResources.lua"/>
 	<Script file="RoleSort.lua"/>
 	<Script file="ConfigEnviroment.lua"/>
 	<Include file="Elements\Load_Elements.xml"/>
