@@ -305,7 +305,7 @@ function S:HandleStatusBar(frame, color)
 end
 
 function S:HandleCheckBox(frame, noBackdrop, noReplaceTextures, forceSaturation)
-	if frame.isSkinned then return end
+	if not frame or frame.isSkinned then return end
 
 	frame:StripTextures()
 	frame.forceSaturation = forceSaturation

@@ -371,28 +371,35 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 	end)
 
 	-- Config
-	Atr_BasicOptionsFrame:SetTemplate("Transparent")
-	Atr_TooltipsOptionsFrame:SetTemplate("Transparent")
-	Atr_UCConfigFrame:SetTemplate("Transparent")
-	Atr_StackingOptionsFrame:SetTemplate("Transparent")
-	Atr_ScanningOptionsFrame:SetTemplate("Transparent")
-	AuctionatorDescriptionFrame:SetTemplate("Transparent")
+	-- Some Auctionator builds don't create every option frame, so skip missing ones
+	local function Get(name) return _G[name] end
+	local function Templ(name) local f = Get(name) if f and f.SetTemplate then f:SetTemplate("Transparent") end end
+	local function Check(name) local f = Get(name) if f then S:HandleCheckBox(f) end end
+	local function Drop(name, w) local f = Get(name) if f then S:HandleDropDownBox(f, w) end end
+	local function Edit(name) local f = Get(name) if f then S:HandleEditBox(f) end end
+	local function Btn(name) local f = Get(name) if f then S:HandleButton(f) end end
 
-	Atr_Stacking_List:SetTemplate("Transparent")
+	Templ("Atr_BasicOptionsFrame")
+	Templ("Atr_TooltipsOptionsFrame")
+	Templ("Atr_UCConfigFrame")
+	Templ("Atr_StackingOptionsFrame")
+	Templ("Atr_ScanningOptionsFrame")
+	Templ("AuctionatorDescriptionFrame")
+	Templ("Atr_Stacking_List")
 
-	S:HandleCheckBox(AuctionatorOption_Enable_Alt_CB)
-	S:HandleCheckBox(AuctionatorOption_Open_All_Bags_CB)
-	S:HandleCheckBox(AuctionatorOption_Show_StartingPrice_CB)
-	S:HandleCheckBox(AuctionatorOption_Def_Duration_CB)
-	S:HandleCheckBox(ATR_tipsVendorOpt_CB)
-	S:HandleCheckBox(ATR_tipsAuctionOpt_CB)
-	S:HandleCheckBox(ATR_tipsDisenchantOpt_CB)
+	Check("AuctionatorOption_Enable_Alt_CB")
+	Check("AuctionatorOption_Open_All_Bags_CB")
+	Check("AuctionatorOption_Show_StartingPrice_CB")
+	Check("AuctionatorOption_Def_Duration_CB")
+	Check("ATR_tipsVendorOpt_CB")
+	Check("ATR_tipsAuctionOpt_CB")
+	Check("ATR_tipsDisenchantOpt_CB")
 
-	S:HandleDropDownBox(AuctionatorOption_Deftab)
-	S:HandleDropDownBox(Atr_tipsShiftDD)
-	S:HandleDropDownBox(Atr_deDetailsDD, 220)
-	S:HandleDropDownBox(Atr_scanLevelDD)
-	Atr_deDetailsDDText:SetJustifyH("RIGHT")
+	Drop("AuctionatorOption_Deftab")
+	Drop("Atr_tipsShiftDD")
+	Drop("Atr_deDetailsDD", 220)
+	Drop("Atr_scanLevelDD")
+	if Atr_deDetailsDDText then Atr_deDetailsDDText:SetJustifyH("RIGHT") end
 
 	local moneyEditBoxes = {
 		"UC_5000000_MoneyInput",
@@ -404,13 +411,13 @@ S:AddCallbackForAddon("Auctionator", "Auctionator", function()
 		"UC_500_MoneyInput",
 	}
 	for _, name in ipairs(moneyEditBoxes) do
-		S:HandleEditBox(_G[name.."Gold"])
-		S:HandleEditBox(_G[name.."Silver"])
-		S:HandleEditBox(_G[name.."Copper"])
+		Edit(name.."Gold")
+		Edit(name.."Silver")
+		Edit(name.."Copper")
 	end
-	S:HandleEditBox(Atr_Starting_Discount)
+	Edit("Atr_Starting_Discount")
 
-	S:HandleButton(Atr_UCConfigFrame_Reset)
-	S:HandleButton(Atr_StackingOptionsFrame_Edit)
-	S:HandleButton(Atr_StackingOptionsFrame_New)
+	Btn("Atr_UCConfigFrame_Reset")
+	Btn("Atr_StackingOptionsFrame_Edit")
+	Btn("Atr_StackingOptionsFrame_New")
 end)
