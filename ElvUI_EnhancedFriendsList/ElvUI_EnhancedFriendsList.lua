@@ -171,7 +171,7 @@ end
 function EFL:Update_IconFrame(button)
 	if E.db.enhanceFriendsList[button.TYPE].classIcon then
 		local classFileName = localizedTable[button.class]
-		if classFileName then
+		if classFileName and CLASS_ICON_TCOORDS[classFileName] then
 			button.iconFrame:Show()
 
 			button.iconFrame.texture:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))

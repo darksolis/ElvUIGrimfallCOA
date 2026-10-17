@@ -11,7 +11,7 @@ function NP:Portrait_PostUpdate()
 	local sf = NP:StyleFilterChanges(nameplate)
 
 	if sf.Portrait or (db.portrait and db.portrait.enable) then
-		if db.portrait.classicon and nameplate.isPlayer then
+		if db.portrait.classicon and nameplate.isPlayer and nameplate.classFile and _G.CLASS_ICON_TCOORDS[nameplate.classFile] then
 			self:SetTexture([[Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES]])
 			self:SetTexCoord(unpack(_G.CLASS_ICON_TCOORDS[nameplate.classFile]))
 			self.backdrop:Hide()

@@ -201,9 +201,13 @@ S:AddCallback("Skin_Friends", function()
 			_, _, level, _, _, _, classFileName = GetWhoInfo(button.whoIndex)
 
 			if classFileName then
-				classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName]
-				button.icon:Show()
-				button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))
+				classTextColor = (CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName]) or RAID_CLASS_COLORS[classFileName] or HIGHLIGHT_FONT_COLOR
+				if CLASS_ICON_TCOORDS[classFileName] then
+					button.icon:Show()
+					button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))
+				else
+					button.icon:Hide()
+				end
 			else
 				classTextColor = HIGHLIGHT_FONT_COLOR
 				button.icon:Hide()
@@ -329,14 +333,16 @@ S:AddCallback("Skin_Friends", function()
 				_, _, _, level, _, _, _, _, online, _, classFileName = GetGuildRosterInfo(button.guildIndex)
 				if classFileName then
 					if online then
-						classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName]
+						classTextColor = (CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName]) or RAID_CLASS_COLORS[classFileName] or HIGHLIGHT_FONT_COLOR
 						levelTextColor = GetQuestDifficultyColor(level)
 						buttonText = _G["GuildFrameButton"..i.."Name"]
 						buttonText:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
 						buttonText = _G["GuildFrameButton"..i.."Level"]
 						buttonText:SetTextColor(levelTextColor.r, levelTextColor.g, levelTextColor.b)
 					end
-					button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))
+					if CLASS_ICON_TCOORDS[classFileName] then
+						button.icon:SetTexCoord(unpack(CLASS_ICON_TCOORDS[classFileName]))
+					end
 				end
 			end
 		else
@@ -345,7 +351,7 @@ S:AddCallback("Skin_Friends", function()
 				_, _, _, _, _, _, _, _, online, _, classFileName = GetGuildRosterInfo(button.guildIndex)
 				if classFileName then
 					if online then
-						classTextColor = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName] or RAID_CLASS_COLORS[classFileName]
+						classTextColor = (CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[classFileName]) or RAID_CLASS_COLORS[classFileName] or HIGHLIGHT_FONT_COLOR
 						_G["GuildFrameGuildStatusButton"..i.."Name"]:SetTextColor(classTextColor.r, classTextColor.g, classTextColor.b)
 						_G["GuildFrameGuildStatusButton"..i.."Online"]:SetTextColor(1.0, 1.0, 1.0)
 					end

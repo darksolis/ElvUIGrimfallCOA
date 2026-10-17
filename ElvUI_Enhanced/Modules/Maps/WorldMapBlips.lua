@@ -20,6 +20,27 @@ local BLIP_TEX_COORDS = {
 }
 
 local BLIP_RAID_Y_OFFSET = 0.5
+local BLIP_TEXTURE = "Interface\\Addons\\ElvUI_Enhanced\\Media\\Textures\\PartyRaidBlips"
+-- Fallback for classes the blip texture has no art for (custom server classes)
+local FALLBACK_TEXTURE = "Interface\\WorldMap\\WorldMapPartyIcon"
+
+local function SetBlip(self, class, raidOffset)
+	local coords = BLIP_TEX_COORDS[class]
+	if coords then
+		self.icon:SetTexture(BLIP_TEXTURE)
+		self.icon:SetVertexColor(1, 1, 1)
+		self.icon:SetTexCoord(coords[1], coords[2], coords[3] + raidOffset, coords[4] + raidOffset)
+	else
+		local color = (CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class]) or RAID_CLASS_COLORS[class]
+		self.icon:SetTexture(FALLBACK_TEXTURE)
+		self.icon:SetTexCoord(0, 1, 0, 1)
+		if color then
+			self.icon:SetVertexColor(color.r, color.g, color.b)
+		else
+			self.icon:SetVertexColor(1, 1, 1)
+		end
+	end
+end
 
 local function OnShowParty(self)
 	local _, class = UnitClass(self.unit)
@@ -27,7 +48,7 @@ local function OnShowParty(self)
 
 	if self.class ~= class then
 		self.class = class
-		self.icon:SetTexCoord(BLIP_TEX_COORDS[class][1], BLIP_TEX_COORDS[class][2], BLIP_TEX_COORDS[class][3], BLIP_TEX_COORDS[class][4])
+		SetBlip(self, class, 0)
 	end
 end
 
@@ -42,12 +63,7 @@ local function OnShowRaid(self)
 	if self.class ~= class or self.inParty ~= inParty then
 		self.class = class
 		self.inParty = inParty
-
-		if inParty then
-			self.icon:SetTexCoord(BLIP_TEX_COORDS[class][1], BLIP_TEX_COORDS[class][2], BLIP_TEX_COORDS[class][3], BLIP_TEX_COORDS[class][4])
-		else
-			self.icon:SetTexCoord(BLIP_TEX_COORDS[class][1], BLIP_TEX_COORDS[class][2], BLIP_TEX_COORDS[class][3] + BLIP_RAID_Y_OFFSET, BLIP_TEX_COORDS[class][4] + BLIP_RAID_Y_OFFSET)
-		end
+		SetBlip(self, class, inParty and 0 or BLIP_RAID_Y_OFFSET)
 	end
 end
 
