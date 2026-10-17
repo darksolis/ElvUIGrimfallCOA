@@ -1,0 +1,16 @@
+## Interface: 30300
+## Title: |cff1784d1E|r|cffe5e3e3lvUI|r |cff1784d1C|r|cffe5e3e3ooldown|r |cff1784d1M|r|cffe5e3e3anager|r
+## Notes: Retail-style Cooldown Manager & UnitFrame Indicators for ElvUI (WoW 3.3.5a)
+## Author: Krysio
+## Version: 1.0.0
+## RequiredDeps: ElvUI
+
+Settings.lua
+Core.lua
+Data.lua
+Spells.lua
+Overlays.lua
+UnitFrameWatch.lua
+PowerBars.lua
+Bars.lua
+Config.lua

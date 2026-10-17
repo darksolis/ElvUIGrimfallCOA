@@ -1,0 +1,12 @@
+## Interface: 30300
+## Title: |cff1784d1E|r|cffe5e3e3lvUI|r |cff1784d1C|r|cffe5e3e3lick|r |cff1784d1C|r|cffe5e3e3ast|r
+## Notes: ElvUI click-casting interface
+## Author: Vupp
+## Version: 0.22.17
+## RequiredDeps: ElvUI
+## SavedVariablesPerCharacter: ElvUI_ClickCastWorldConsent, ElvUI_ClickCastCharacterDB
+
+Core.lua
+SecureEngine.lua
+Editor.lua
+Options.lua
